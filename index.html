@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> title </title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link href="css/custom.css" rel="stylesheet">
+	<link href="css/custom2.css" rel="stylesheet">
+<link rel="stylesheet" href="https://codepen.io/kaolay/pen/ORYEzj">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/matericious@0.9.0/dist/css/matericious.min.css">
+<style>
+#more {display: none;}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial;
+  font-size: 17px;
+}
+#myBtn:hover {
+    background: transparent !important;
+    color: white !important;
+}
+#video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+	width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+	margin-bottom: 58px;
+	object-fit: cover;
+
+}
+
+.content {
+  position: fixed;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+}
+
+#myBtn {
+  width: 200px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  /* background: #000; */
+  color: #fff;
+  cursor: pointer;
+}
+
+#myBtn:hover {
+  background: #ddd;
+  color: black;
+}
+#myBtn2{
+	background: transparent;
+    border: none;
+}
+.vjs-default-skin .vjs-volume-control { display: none; }
+video::-webkit-media-controls-fullscreen-button,
+video::-webkit-media-controls-mute-button,
+video::-webkit-media-controls-menu-button {
+
+    display: none !important;
+}
+
+/* hide controls on fullscreen with WebKit */
+video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+video {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  background-color: rgba(215, 38, 61, 0);
+}
+
+#video__container {
+  height: 100vh;
+  overflow: hidden;
+}
+
+#video__caption {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: rgba(215, 38, 61, 0.9);
+  color: #ccc;
+  font-size: 1.25rem;
+  text-align: center;
+  margin: 0;
+  padding: 0.5rem 0;
+  z-index: 2147483647;
+  cursor: pointer;
+  transition: all .8s ease-in-out;
+}
+
+#video__caption .fa-close {
+  position: absolute;
+  right: 20px;
+  font-size:26px;
+}
+
+#video__play__centerButton {
+  display:flex;
+  position:absolute;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+  height:100%;
+  cursor: pointer;
+  opacity: .8;
+  transition: all .8s ease-in-out;
+}
+
+#video__controls {
+	position: absolute;
+bottom: 60px;
+left: 0;
+right: 0;
+padding: 5px;
+width: 100%;
+text-align: center;
+background-color: transparent;
+z-index: 2147483647;
+transition: all .8s ease-in-out;
+}
+
+button {
+  border: 0;
+  color: #eee;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button:hover {
+  cursor: pointer;
+  color: #D7263D;
+}
+
+#seek-bar {
+  width: 360px;
+}
+
+#volume-bar {
+  width: 60px;
+}
+
+video:-webkit-full-screen + #video-controls {
+  position: relative;
+  bottom: 0;
+}
+
+/* slider */
+input[type="range"] {
+  -webkit-appearance: none !important;
+  position:relative;
+  top:-4px;
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background-color: #D7263D;
+}
+#video__play__centerButton{
+	opacity: 0 !important;
+}
+</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div nav-content="1" class="active">
+
+
+			<div class="video-hero jquery-background-video-wrapper demo-video-wrapper">
+				<!-- <video controls disablepictureinpicture controlslist="nodownload" autoplay  loop id="myVideo">
+				  <source src="https://media.istockphoto.com/videos/rain-falling-into-slow-motion-video-id135821255" type="video/mp4">
+				  Your browser does not support HTML5 video.
+				</video> -->
+
+				<div id="video__container">
+					  <!-- Video -->
+					  <video id="video" preload="metadata" poster="https://mango.blender.org/wp-content/uploads/2013/06/12_scients_header.jpg?x88450">
+					    <source src="https://iandevlin.github.io/mdn/video-player/video/tears-of-steel-battle-clip-medium.mp4" type="video/mp4">
+					  </video>
+					  <div id="video__controls__container">
+					    <div id="video__play__centerButton" style="    opacity: 0;" class="fa fa-play-circle-o fa-5x"></div>
+					    <div id="video__controls">
+					      <button type="button" id="play-pause" class="controls play fa fa-play"></button>
+					      <input type="range" id="seek-bar" value="0" class="controls">
+					      <!-- <button type="button" id="mute" class="controls fa fa-volume-off"></button> -->
+					      <input type="range" id="volume-bar" class="controls" min="0" max="1" step="0.1" style="    opacity: 0;">
+					      <!-- <button type="button" id="full-screen" class="controls fa fa-arrows-alt"></button> -->
+					    </div>
+					  </div>
+					</div>
+				  <div class="video-overlay"></div>
+			  	<div class="page-width">
+						<div class="d-flex icon_8" style="justify-content: space-between;">
+							<div class="">
+								<img src="image/icons8-notification-26.png" alt="">
+							</div>
+							<div class="">
+								<img src="image/icons8-camera-24.png" alt="">
+							</div>
+						</div>
+				    <div class="video-hero--content w100">
+					      <div class="d-flex justify-center">
+					      	<div class="w62px">
+					      		<div class="img_user">
+											<img src="image/person_image.jpg">
+										</div>
+					      	</div>
+					      	<div> <span>John Doe</span> </div>
+					      	<div style="    margin-top: 19px;">
+					      		<ul style="    display: -webkit-inline-box;">
+					      			<li>Subscribe</li>
+											<li style="    margin-left: 18px;
+    									list-style: none;"> <img src="image/icons8-notification-26.png" alt=""> </li>
+					      		</ul>
+					      	</div>
+					      </div>
+					      <div>
+					      	<div> Legend of tomorrow </div>
+					      	<!-- <p class="p-0"></p> -->
+										<div  id="myBtn_new" style="
+										margin-top: -22px;
+										cursor: pointer;
+										    float: right;
+										    width: 62%;">
+											<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+											width="10" height="10"
+											viewBox="0 0 172 172"
+											style=" fill:#000000;     margin-left: 19px;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#ffffff"><path d="M163.23517,35.7115c-2.39367,-4.343 -7.06633,-7.04483 -12.20483,-7.04483h-130.06067c-5.1385,0 -9.81117,2.70183 -12.20483,7.04483c-2.279,4.14233 -2.12133,9.0085 0.41567,13.0075l65.03033,102.59083c2.5155,3.98467 6.923,6.35683 11.78917,6.35683c4.86617,0 9.27367,-2.37217 11.79633,-6.34967l65.03033,-102.59083c2.52983,-4.00617 2.6875,-8.87233 0.4085,-13.01467z"></path></g></g></svg>
+										</div>
+
+										<div id="more">erisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor
+											vitae massa. Fusce luctus vestibulum augue ut
+											aliquet. Nunc sagittis dictum nisi, sed
+											ullamcorper ipsum dignissim ac. In at libero
+											 sed nunc venenatis imperdiet sed ornare
+											 turpis. Donec vitae dui eget tellus gravida
+											 venenatis. Integer fringilla congue eros non
+											 fermentum. Sed dapibus pulvinar nibh tempor
+											 porta. <br> <a href="#" class="less" style="color: white;">Show less</a>
+										 </div>
+										 <div class="">
+										 	<div class="d-flex " style=" margin: 12px 00;     width: 100%;">
+										 		<div class="">
+										 			8,250 views
+										 		</div>
+												<div class="">
+													<ul style="    margin: 0;">
+														<li>2 days ago</li>
+													</ul>
+												</div>
+										 	</div>
+											<div class="row">
+												<div class="w50">
+													<div class="d-flex justify-center" style="  margin-left: 13px;margin-top: 6px;">
+														<div class="w40">
+															<img src="image/icons8-heart-outline-24.png" width="24px" alt="">
+														</div>
+														<div class="w40">
+															<img src="image/icons8-chat-bubble-24.png" width="24px" alt="">
+														</div>
+														<div class="">
+															<img src="image/icons8-email-send-30.png" width="26px" alt="">
+														</div>
+														<div class="" style="margin-top: -11px; margin-left: 14px;">
+															<span style="    font-size: 29px;">...</span>
+														</div>
+													</div>
+												</div>
+												<div class="w50">
+													<div class="d-flex justify-center" style="    justify-content: space-between;     float: right;
+														        margin-right: 27px;
+																margin-top: 12px;
+														">
+
+														<div class="">
+															<img src="image/icons8-heart-outline-24.png" width="15px" alt=""> 44.2k
+														</div>
+														<div class="" style=" margin-left: 15px;">
+															<img src="image/icons8-chat-bubble-24.png" width="15px" alt=""> 44.2k
+														</div>
+													</div>
+												</div>
+											</div>
+
+										 </div>
+										<!-- <div style="    width: 100%;  float: right;">
+											<button id="myBtn2"
+											onclick="myFunction()">
+											<img src='image/icons8-pause-24.png'>
+										</button></div> -->
+					      </div>
+		    		</div>
+			  	</div>
+			</div>
+
+
+		</div>
+		<div nav-content="2">
+			<div class="col-sm-12 mt-16 p-0">
+		  <div class="d-flex p0-16">
+				<div class="w95">
+					<div class="form-group has-search">
+				    <span class="fa fa-search form-control-feedback"></span>
+				    <input type="text" class="form-control" placeholder="Search">
+				  </div>
+				</div>
+				<div class="w5" style="    margin-top: 4px;">
+					<img src="image/icons8-microphone-30.png" alt="">
+				</div>
+			</div>
+			<div class="">
+			 <div class="">
+				<!-- <base href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/"> -->
+					<div id="slider">
+						<figure>
+							<img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Taj-Mahal.jpg" alt>
+							<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Diksha_Bhumi.jpg/800px-Diksha_Bhumi.jpg" alt>
+							<img src="https://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/Spain/Ibiza/ibiza-destination-guide-main.jpg?imwidth=450" alt>
+							<img src="https://whc.unesco.org/uploads/thumbs/site_0668_0067-1200-630-20151104115852.jpg" alt>
+							<img src="https://whc.unesco.org/uploads/thumbs/site_0668_0067-1200-630-20151104115852.jpg" alt>
+
+						</figure>
+					</div>
+			</div>
+			<div class="mt-6">
+				<h5>Popular</h5>
+				<div class="d-flex flex-wrap">
+					<div class="m8">
+						<div class="container_img">
+						  <img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+						 	<div class="centered">Comedians</div>
+						</div>
+					</div>
+					<div class="m8">
+						<div class="container_img">
+						  <img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+						 	<div class="centered">Makeup tutorials</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mt-6">
+				<h5>All Categories</h5>
+				<div class="d-flex flex-wrap">
+					<div class="m8">
+						<div class="container_img">
+						  <img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+						 	<div class="centered">Trending</div>
+						</div>
+					</div>
+					<div class="m8">
+						<div class="container_img">
+						  <img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+						 	<div class="centered">Music</div>
+						</div>
+					</div>
+					<div class="m8">
+						<div class="container_img">
+						  <img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+						 	<div class="centered">Music</div>
+						</div>
+					</div>
+					<div class="m8">
+						<div class="container_img">
+						  <img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+						 	<div class="centered">Music</div>
+						</div>
+					</div>
+					<div class="m8">
+						<div class="container_img">
+						  <img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+						 	<div class="centered">Music</div>
+						</div>
+					</div>
+					<div class="m8">
+						<div class="container_img">
+						  <img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+						 	<div class="centered">Music</div>
+						</div>
+					</div>
+					<div class="m8">
+						<div class="container_img">
+						  <img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+						 	<div class="centered">Music</div>
+						</div>
+					</div>
+					<div class="m8">
+						<div class="container_img">
+						  <img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+						 	<div class="centered">Music</div>
+						</div>
+					</div>
+					<div class="m8">
+						<div class="container_img">
+						  <img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+						 	<div class="centered">Music</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		  </div>
+		</div>
+		<div nav-content="3">
+		  <h5 class="text-center">Library</h5> <hr>
+			<div class="mt-6">
+				<h5>Stories</h5>
+				<div class="">
+					<div id="exampleSlider">
+			       <div class="MS-content">
+							 <div class="item">
+								 <div class="container_img">
+										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+										<!-- <div class="centered">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+											style="border-radius: 50px; width: 50px; height: 50px;">
+										</div> -->
+									</div>
+									<p style="text-align:center;">John Doe</p>
+							 </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+								 <div class="item">
+									 <div class="container_img">
+											<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+											<!-- <div class="centered">
+												<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt=""
+												style="border-radius: 50px; width: 50px; height: 50px;">
+											</div> -->
+										</div>
+										<p style="text-align:center;">John Doe</p>
+			           </div>
+			       </div> <hr>
+			       <!-- <div class="MS-controls">
+			           <button class="MS-left"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+			           <button class="MS-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+			       </div> -->
+			   </div>
+				</div>
+				<div class="">
+					<div class="col-sm-12">
+
+						<div class="d-flex" style="justify-content: space-between;
+    				align-items: center;"	>
+						<div class="">
+							<div class="d-flex" style="    align-items: center;">
+								<div class="">
+									<i class="fa fa-clock-o" aria-hidden="true"></i>
+
+								</div>
+								<div class="ml12 text-center">
+									<h5 style="margin: 0;">History</h6>
+									<span style="  font-weight: 400;">6 videos</span>
+								</div>
+							</div>
+						</div>
+						<div class="">
+							<a href="#">See all</a>
+						</div>
+					</div>
+
+					</div>
+
+					<div class="new_content " id="exampleSlider">
+			       <div class="MS-content">
+							 <div class="item">
+								 <div class="container_img">
+										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+										<div class="bottom-left">
+											<span style="color: white;">John Doe</span>
+										</div>
+										<div class="top-right">
+											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+										</div>
+									</div>
+								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+			       </div> <hr>
+			       <!-- <div class="MS-controls">
+			           <button class="MS-left"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+			           <button class="MS-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+			       </div> -->
+			   </div>
+				</div>
+
+				<div class="">
+					<div class="col-sm-12">
+
+						<div class="d-flex" style="justify-content: space-between;
+    				align-items: center;"	>
+						<div class="">
+							<div class="d-flex" style="    align-items: center;">
+								<div class="">
+									<i class="fa fa-clock-o" aria-hidden="true"></i>
+
+								</div>
+								<div class="ml12 text-center">
+									<h5 style="margin: 0;">Saved</h6>
+									<span style="  font-weight: 400;">6 videos</span>
+								</div>
+							</div>
+						</div>
+						<div class="">
+							<a href="#">See all</a>
+						</div>
+					</div>
+
+					</div>
+
+					<div class="new_content " id="exampleSlider">
+			       <div class="MS-content">
+							 <div class="item">
+								 <div class="container_img">
+										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+										<div class="bottom-left">
+											<span style="color: white;">John Doe</span>
+										</div>
+										<div class="top-right">
+											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+										</div>
+									</div>
+								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+								<div class="item">
+ 								 <div class="container_img">
+ 										<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="Snow" style="width:100%;">
+ 										<div class="bottom-left">
+ 											<span style="color: white;">John Doe</span>
+ 										</div>
+ 										<div class="top-right">
+ 											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+ 										</div>
+ 									</div>
+ 								</div>
+			       </div> <hr>
+			       <!-- <div class="MS-controls">
+			           <button class="MS-left"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+			           <button class="MS-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+			       </div> -->
+			   </div>
+				</div>
+
+			</div>
+		</div>
+		<div nav-content="4">
+		  <h5 class="text-center">Inbox</h5>
+			<hr>
+			<div class="col-sm-12">
+				<div class="form-group has-search" style="    position: relative;">
+					<span class="fa fa-search form-control-feedback" style="    left: 16px;"></span>
+					<input type="text" class="form-control" placeholder="Search" >
+				</div>
+				<div class="col-sm-12">
+
+						<div class="d-flex" style="justify-content: space-between;
+    				align-items: center;">
+						<div class="">
+							<div class="d-flex" style="    align-items: center;">
+								<div class="chat_inbox">
+									<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="">
+								</div>
+								<div class="ml12 ">
+									<h5 class="fs16" style="margin: 0;">John Appleseed</h5>
+									<span class="fs15" style="  font-weight: 400;">Hello world</span>
+								</div>
+							</div>
+						</div>
+						<div class="">
+							<span class="fs15">18 Jun 12:00PM</span>
+						</div>
+					</div>
+					<hr>
+					<div class="d-flex" style="justify-content: space-between;
+					align-items: center;">
+					<div class="">
+						<div class="d-flex" style="    align-items: center;">
+							<div class="chat_inbox">
+								<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="">
+							</div>
+							<div class="ml12 ">
+								<h5 class="fs16" style="margin: 0;">John Appleseed</h5>
+								<span class="fs15" style="  font-weight: 400;">Hello world</span>
+							</div>
+						</div>
+					</div>
+					<div class="">
+						<span class="fs15">18 Jun 12:00PM</span>
+					</div>
+				</div>
+				<hr>
+				<div class="d-flex" style="justify-content: space-between;
+				align-items: center;">
+				<div class="">
+					<div class="d-flex" style="    align-items: center;">
+						<div class="chat_inbox">
+							<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="">
+						</div>
+						<div class="ml12 ">
+							<h5 class="fs16" style="margin: 0;">John Appleseed</h5>
+							<span class="fs15" style="  font-weight: 400;">Hello world</span>
+						</div>
+					</div>
+				</div>
+				<div class="">
+					<span class="fs15">18 Jun 12:00PM</span>
+				</div>
+			</div>
+			<hr>
+			<div class="d-flex" style="justify-content: space-between;
+			align-items: center;">
+			<div class="">
+				<div class="d-flex" style="    align-items: center;">
+					<div class="chat_inbox">
+						<img src="https://d3qvqlc701gzhm.cloudfront.net/thumbs/899ca4adcf378a73c75debdd13b1c5897b035213c9694d8cb1fb13afed3913e2-750.jpg" alt="">
+					</div>
+					<div class="ml12 ">
+						<h5 class="fs16" style="margin: 0;">John Appleseed</h5>
+						<span class="fs15" style="  font-weight: 400;">Hello world</span>
+					</div>
+				</div>
+			</div>
+			<div class="">
+				<span class="fs15">18 Jun 12:00PM</span>
+			</div>
+		</div>
+		<hr>
+
+					</div>
+			</div>
+		</div>
+		<div nav-content="5">
+		  <h1>Content 1 - Nearby3</h1>
+		</div>
+
+		<nav class="bottomNav z-1 text-blue">
+		  <button class="wave  active" nav-id="1">
+		    <i class="material-icons">home</i>
+		    <span>Home</span>
+		  </button>
+		  <button class="ripple" nav-id="2">
+				<!-- <div class="" style="    display: flex;
+    justify-content: center;">
+					<img src="image/icons8-play-24.png" alt="">
+				</div> -->
+		    <i class="material-icons">play_arrow</i>
+		    <span>Discover</span>
+		  </button>
+		  <button class="wave" nav-id="3">
+				<!-- <div class="" style="    display: flex;
+    justify-content: center;">
+					<img src="image/icons8-read-24.png" alt="">
+				</div> -->
+		    <i class="material-icons">import_contacts</i>
+		    <span>Library</span>
+		  </button>
+		  <button class="wave" nav-id="4">
+				<!-- <div style="    display: flex;
+    justify-content: center;"><img src="image/icons8-speech-bubble-24.png" alt=""></div> -->
+		    <i class="material-icons">chat_bubble</i>
+		    <span>Inbox</span>
+		  </button>
+		  <button class="wave" nav-id="5">
+		    <i class="material-icons">person</i>
+		    <span>Me</span>
+		  </button>
+		</nav>
+	</div>
+</body>
+
+<script src="js/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="js/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/matericious@0.9.0/dist/js/matericious.min.js"></script>
+
+<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="https://rawgit.com/BGStock/jquery-background-video/master/jquery.background-video.js"></script>
+<script type="text/javascript" src="https://rawgit.com/BGStock/jquery-background-video/master/jquery.background-video.js"></script>
+
+    <!-- Include jQuery -->
+    <script src="js/jquery-2.2.4.min.js"></script>
+
+    <!-- Include Multislider -->
+    <script src="js/multislider.min.js"></script>
+
+    <!-- Initialize element with Multislider -->
+    <script>
+		// Video
+var VideoPlayer = {
+  init: function() {
+    video.volume = .0;
+    // Buttons
+    var playButton = document.getElementById("play-pause");
+    var muteButton = document.getElementById("mute");
+    var fullScreenButton = document.getElementById("full-screen");
+    video = document.getElementById("video");
+    // Sliders
+    var seekBar = document.getElementById("seek-bar");
+    var volumeBar = document.getElementById("volume-bar");
+    volumeBar.value = video.volume;
+    // Controls
+    videoControls = document.getElementById("video__controls");
+    playCenterButton = document.getElementById("video__play__centerButton");
+    caption = document.getElementById("video__caption");
+    // Event listener for the play/pause button
+    VideoPlayer.hideControls();
+    //display control on mousemove
+    document.getElementById("video__container").addEventListener("mousemove", function() {
+      VideoPlayer.showControls();
+    });
+    videoControls.addEventListener("mouseover", function() {
+      VideoPlayer.showControls();
+      clearTimeout(hideControl);
+    });
+    playButton.addEventListener("click", function() {
+      playVideo();
+    });
+    playCenterButton.addEventListener("click", function() {
+      playVideo();
+    });
+    function playVideo(){
+      if (video.paused == true) {
+        // Play the video
+        video.play();
+        // Update the button text to 'Pause'
+        playButton.classList.toggle("fa-play");
+        playButton.classList.toggle("fa-pause");
+        playCenterButton.classList.toggle("fa-play-circle-o");
+        playCenterButton.classList.toggle("fa-pause");
+        playCenterButton.style.opacity = 0;
+      } else {
+        // Pause the video
+        video.pause();
+        // Update the button text to 'Play'
+        playButton.classList.toggle("fa-play");
+        playButton.classList.toggle("fa-pause");
+        playCenterButton.classList.toggle("fa-play-circle-o");
+        playCenterButton.classList.toggle("fa-pause");
+        playCenterButton.style.opacity = .8;
+      }
+    };
+
+    // Event listener for the mute button
+    muteButton.addEventListener("click", function() {
+      if (video.muted == false) {
+        // Mute the video
+        video.muted = true;
+        // Update the volume Bar
+        volumeBar.value = 0;
+      } else {
+        // Unmute the video
+        video.muted = false;
+        // Update the volume Bar
+        volumeBar.value = video.volume;
+      }
+    });
+
+    // Checks if the document is currently in fullscreen mode
+    var isFullScreen = function() {
+      return !!(document.fullScreen || document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement || document.fullscreenElement);
+    }
+
+    // Fullscreen
+    fullScreenButton.addEventListener("click", function() {
+      // If fullscreen mode is active...
+      if (isFullScreen()) {
+         // ...exit fullscreen mode
+        // (Note: this can only be called on document)
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+        else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
+        else if (document.msExitFullscreen) document.msExitFullscreen();
+      } else {
+        if (video.requestFullscreen) video.requestFullscreen();
+        else if (video.mozRequestFullScreen) video.mozRequestFullScreen();
+        else if (video.webkitRequestFullScreen) {
+          video.webkitRequestFullScreen();
+        } else if (video.msRequestFullscreen) video.msRequestFullscreen();
+        VideoPlayer.hideControls();
+      }
+    });
+
+    // Event listener for the seek bar
+    var seekBarActive = false;
+    seekBar.addEventListener("mousedown", function() {
+      seekBarActive = true;
+      clearTimeout(hideControl);
+    });
+    seekBar.addEventListener("mouseup", function() {
+      seekBarActive = false;
+      VideoPlayer.hideControls();
+    });
+    seekBar.addEventListener("mousemove", function() {
+      if (seekBarActive == true){
+        // Calculate the new time
+        var time = video.duration * (seekBar.value / 100);
+        // Update the video time
+        video.currentTime = time;
+        clearTimeout(hideControl);
+      }
+    });
+
+    // Update the seek bar as the video plays
+    video.addEventListener("timeupdate", function() {
+      // Calculate the slider value
+      var value = (100 / video.duration) * video.currentTime;
+      // Update the slider value
+      seekBar.value = value;
+    });
+
+    // Event listener for the volume bar
+    var volumeBarActive = false;
+    volumeBar.addEventListener("mousedown", function() {
+      volumeBarActive = true;
+      clearTimeout(hideControl);
+    });
+    volumeBar.addEventListener("mouseup", function() {
+      volumeBarActive = false;
+
+    });
+    volumeBar.addEventListener("mousemove", function() {
+      if (volumeBarActive == true){
+        video.volume = volumeBar.value;
+        clearTimeout(hideControl);
+      }
+    });
+  },
+  hideControls: function(){
+    hideControl = setTimeout(function(){
+      videoControls.style.opacity = .0;
+      playCenterButton.style.opacity = .0;
+      caption.style.opacity = .0;
+      [].forEach.call(document.getElementsByClassName("controls"), function(el) {
+        el.style.visibility = "hidden";
+      });
+    }, 2000);
+  },
+  showControls: function(){
+    //Hide Display Control Bar
+    videoControls.style.opacity = .8;
+    playCenterButton.style.opacity = .8;
+    caption.style.opacity = .8;
+    [].forEach.call(document.getElementsByClassName("controls"), function(el) {
+      el.style.visibility = "visible";
+    });
+    clearTimeout(hideControl);
+    VideoPlayer.hideControls();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  VideoPlayer.init();
+});
+
+    $('#exampleSlider').multislider({
+        interval: 4000,
+        slideAll: true,
+        duration: 1500
+    });
+    </script>
+<script>
+$(document).ready(function(){
+  $("#myBtn_new").click(function(){
+		$("#more").show();
+    $("#myBtn_new").hide();
+  });
+  $(".less").click(function(){
+		$("#more").hide();
+		$("#myBtn_new").show();
+  });
+});
+</script>
+</html>
