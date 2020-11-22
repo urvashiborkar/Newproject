@@ -1,0 +1,460 @@
+/* slider */
+@keyframes slidy {
+0% { left: 0%; }
+20% { left: 0%; }
+25% { left: -100%; }
+45% { left: -100%; }
+50% { left: -200%; }
+70% { left: -200%; }
+75% { left: -300%; }
+95% { left: -300%; }
+100% { left: -400%; }
+}
+.p0-16{
+  padding: 0px 16px;
+
+}
+.container_img{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.centered {
+  position: absolute;
+  bottom: 7%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+}
+.m8{
+  padding: 8px;
+  width: 50%;
+
+
+}
+.mt-6 h5{
+  padding: 0;
+    margin: 0;
+    padding-left: 10px;
+    font-weight: 600;
+
+}
+.mt-6{
+  margin-top: 18px;
+
+}
+.text-center{
+  text-align: center;
+  font-weight: 600;
+  margin-top: 7px;
+
+}
+.MS-content .item .container_img img{
+  width: 100%;
+height: 221px;
+padding: 6px;
+border-radius: 16px;
+}
+.ml12{
+  margin-left: 12px;
+
+}
+
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+.new_content .MS-content .item .container_img img{
+  height: 174px;
+
+}
+.chat_inbox img{
+  border-radius: 50px;
+width: 50px;
+height: 50px;
+}
+.fs16{
+  font-size: 16px;
+font-weight: 600;
+}
+.fs15{
+  font-size: 15px;
+}
+.MS-content .item .container_img .centered img{
+border-radius: 50px;
+width: 50px;
+height: 50px;
+border: 2px solid blue;
+padding: 1px;
+background-color: white;
+}
+.m8 img{
+  border-radius: 8px;
+}
+.flex-wrap{
+  flex-wrap: wrap;
+}
+@media (max-width: 767px) {
+  #slider figure img { width: 20%; float: left;
+      min-height: 194px;
+      height: 192px !important;
+    }
+}
+#slider { overflow: hidden; }
+#slider figure img { width: 20%; float: left;
+    min-height: 194px;
+    height: 500px;}
+#slider figure {
+  position: relative;
+  width: 500%;
+  margin: 0;
+  left: 0;
+  text-align: left;
+  font-size: 0;
+  animation: 30s slidy infinite;
+}
+
+
+
+
+body {
+  margin: 0;
+}
+.w40{
+  width: 40px;
+}
+.icon_8{
+  justify-content: space-between;
+position: absolute;
+width: 100%;
+/* margin: 21px; */
+padding: 24px;
+top: 0;
+}
+ul li{
+  list-style: none;
+}
+#seek-bar {
+    width: 86% !important;
+}
+[nav-content] {
+  display: none;
+}
+[nav-content].active {
+  display: block;
+}
+.w95{
+  width: 95%;
+}
+.w5{
+  width: 5%;
+}
+.form-control-feedback{
+  position: absolute;
+  top: 12px;
+
+left: 26px;
+}
+.has-search input{
+  padding: 9px 39px;
+  background-color: #cccccc2e;
+      border: none;
+}
+.mt-16{
+  margin-top: 16px;
+
+}
+.bottomNav {
+  width: 100%;
+  height: 60px;
+  position: fixed;
+  bottom: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+.bottomNav.fill > [nav-id] {
+  flex-grow: 1;
+  min-width: 25%;
+}
+.bottomNav > [nav-id] {
+  min-width: 120px;
+  height: 100%;
+  margin: 0;
+  border-radius: 0;
+  line-height: 25px;
+  text-align: center;
+  text-align: center;
+  padding: 8px;
+  background: transparent;
+  border: none;
+  color: #fff;
+}
+.bottomNav > [nav-id] * {
+  display: block;
+}
+.bottomNav > [nav-id].active {
+  color: inherit;
+}
+.bottomNav > [nav-id] > i {
+  font-size: 25px;
+  text-align: center;
+}
+.bottomNav.no-label > button {
+  min-width: 80px;
+}
+.bottomNav.no-label > button > span {
+  height: 0px;
+  overflow: hidden;
+  transition: height .2s;
+}
+.bottomNav.no-label > button.active > span {
+  height: 20px;
+}
+
+.bottomNav button{
+      width: 20%;
+    font-size: 12px;
+    min-width: 20px !important;
+}
+.bottomNav{
+  background-color: black;
+}
+
+/*home*/
+
+/* Settings - feel free to play with these */
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+/**
+ * This part should be set separately for each video
+ * if there are multiple videos in your site.
+ * I.e. '.demo-video-wrapper' is the name of this particular video
+ */
+.demo-video-wrapper {
+  background-image: url(https://d3k5xyayaartr5.cloudfront.net/_assets/home-video/beach-waves-loop.jpg);
+      height: 100vh;
+}
+
+/* Video overlay and content */
+.video-overlay {
+  position: absolute;
+  background-color: #111010;
+
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  pointer-events: none;
+  /* Allows right click menu on the video */
+  /* background: url("https://d3k5xyayaartr5.cloudfront.net/_assets/pattern-overlays/patterns/black-medium-checks.png") left top repeat; */
+  opacity: 0.3;
+}
+ul{
+  padding-left: 22px;
+
+}
+.video-hero--content {
+      position: absolute;
+    bottom: 137px;
+        left: 14px;
+  color: #FFF;
+  /*margin: 150px 0;*/
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+
+.video-hero--content h2 {
+  font-size: 34px;
+  margin: 0 0 10px;
+}
+
+.video-hero--content p {
+  font-size: 20px;
+  margin: 0;
+}
+
+/* Other stuff */
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+a {
+  text-decoration: none;
+  color: #a46497;
+}
+
+.cf:before,
+.cf:after {
+  content: " ";
+  display: table;
+}
+
+.cf:after {
+  clear: both;
+}
+
+
+
+.title {
+  display: block;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.subtitle {
+  display: block;
+  font-weight: normal;
+  font-size: 15px;
+  color: #959699;
+}
+
+a:hover .subtitle {
+  color: #FFF;
+}
+
+#site-title {
+  float: left;
+  margin: 0;
+}
+
+
+
+/* CSS from jQuery Background Video plugin */
+/**
+ * Set default positioning as a fallback for if the plugin fails
+ */
+.jquery-background-video-wrapper {
+  position: relative;
+  overflow: hidden;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.jquery-background-video {
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  -o-object-fit: contain;
+  object-fit: contain;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+/**
+ * Fade in videos
+ * Note the .js class - so non js users still
+ * see the video
+ */
+.js .jquery-background-video {
+  opacity: 0;
+  -webkit-transition: opacity 300ms linear;
+  transition: opacity 300ms linear;
+}
+
+.js .jquery-background-video.is-visible {
+  opacity: 1;
+}
+
+/**
+ * Pause/play button
+ */
+.jquery-background-video-pauseplay {
+  position: absolute;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  width: 20px;
+  height: 20px;
+  top: 15px;
+  right: 15px;
+  padding: 0;
+  cursor: pointer;
+  outline: none !important;
+}
+
+.jquery-background-video-pauseplay span {
+  display: none;
+}
+
+.jquery-background-video-pauseplay:after,
+.jquery-background-video-pauseplay:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+.jquery-background-video-pauseplay.play:before {
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 15px solid #FFF;
+}
+
+.jquery-background-video-pauseplay.pause:before,
+.jquery-background-video-pauseplay.pause:after {
+  border-top: 10px solid #FFF;
+  border-bottom: 10px solid #FFF;
+  border-left: 5px solid #FFF;
+}
+
+.jquery-background-video-pauseplay.pause:after {
+  left: 10px;
+}
+.d-flex{
+  display: flex;
+}
+.img_user{
+      text-align: left;
+
+}
+.img_user img{
+    width: 40px;
+    border-radius: 50px;
+}
+.justify-center{
+    align-items: center;
+}
+.w50{
+  width: 50%;
+float: left;
+}
+.w100{
+  width: 98%;
+}
+.w62px{
+      width: 50px;
+
+}
+.p-0{
+  padding: 0;
+}
